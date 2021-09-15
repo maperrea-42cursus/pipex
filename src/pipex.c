@@ -6,7 +6,7 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 14:20:57 by maperrea          #+#    #+#             */
-/*   Updated: 2021/09/13 17:58:38 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/15 18:05:23 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,23 @@ void	set_fd(t_command *command)
 	command->proc[1].in = fd[0];
 }
 
+void	exec_cmd(t_proc proc, char **envp)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (!pid)
+	{
+		dup2(proc.in, 0);
+		dup2(proc.out, 1);
+		execve(proc.path, proc.argv, envp);
+		error_exit(strerror(errno));
+	}
+	waitpid(pid, NULL, 0);
+	close(proc.in);
+	close(proc.out);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_command	command;
@@ -116,6 +133,8 @@ int	main(int argc, char **argv, char **envp)
 	parse_argv(argv, &command);
 	get_proc_path(&command, envp);
 	set_fd(&command);
-	printf("%s\n%s\n", command.proc[0].path, command.proc[1].path);
-	printf("%d | %d | %d | %d\n", command.proc[0].in, command.proc[0].out, command.proc[1].in, command.proc[1].out);
+	exec_cmd(command.proc[0], envp);
+	exec_cmd(command.proc[1], envp);
+	free_list();
+	system("leaks pipex");
 }

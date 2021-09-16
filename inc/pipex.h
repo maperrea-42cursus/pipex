@@ -6,7 +6,7 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 14:20:46 by maperrea          #+#    #+#             */
-/*   Updated: 2021/09/13 17:57:19 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/16 17:56:10 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ typedef struct s_command
 
 void			array_free(char **array);
 void			error_exit(char *error);
+void			parse_argv(char **argv, t_command *command);
 #endif

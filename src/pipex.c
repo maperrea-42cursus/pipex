@@ -6,33 +6,11 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 14:20:57 by maperrea          #+#    #+#             */
-/*   Updated: 2021/09/15 18:05:23 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/16 18:09:15 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	parse_argv(char **argv, t_command *command)
-{
-	char	**tmp;
-
-	command->infile = argv[1];
-	command->outfile = argv[4];
-	tmp = ft_split(argv[2], ' ');
-	if (!tmp)
-		error_exit("Error: malloc failed\n");
-	command->proc[0].path = ft_strdup(tmp[0]);
-	command->proc[0].argv = tmp;
-	tmp = ft_split(argv[3], ' ');
-	if (!tmp)
-	{
-		free_one(command->proc[0].path);
-		array_free(command->proc[0].argv);
-		error_exit("Error: malloc failed\n");
-	}
-	command->proc[1].path = ft_strdup(tmp[0]);
-	command->proc[1].argv = tmp;
-}
 
 void	set_path(t_command *command, int proc, char **path)
 {
@@ -136,5 +114,4 @@ int	main(int argc, char **argv, char **envp)
 	exec_cmd(command.proc[0], envp);
 	exec_cmd(command.proc[1], envp);
 	free_list();
-	system("leaks pipex");
 }

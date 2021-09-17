@@ -6,13 +6,13 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/02 16:01:36 by maperrea          #+#    #+#             */
-/*   Updated: 2021/06/12 23:34:08 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/17 12:22:43 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static t_malloc	*g_malloc_list;
+const static t_malloc	*g_malloc_list;
 
 void	*malloc_list(size_t size)
 {
@@ -32,7 +32,7 @@ void	*malloc_list(size_t size)
 		g_malloc_list = new_malloc;
 	else
 	{
-		tmp = g_malloc_list;
+		tmp = (t_malloc *)g_malloc_list;
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new_malloc;
@@ -45,7 +45,7 @@ void	free_one(void *ptr)
 	t_malloc	*tmp;
 	t_malloc	*next;
 
-	tmp = g_malloc_list;
+	tmp = (t_malloc *)g_malloc_list;
 	while (tmp->next && tmp->next->ptr != ptr)
 		tmp = tmp->next;
 	if (tmp->next)
@@ -65,7 +65,7 @@ void	free_list(void)
 	{
 		next = g_malloc_list->next;
 		free(g_malloc_list->ptr);
-		free(g_malloc_list);
+		free((void *)g_malloc_list);
 		g_malloc_list = next;
 	}
 }

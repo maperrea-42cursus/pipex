@@ -6,7 +6,7 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 14:20:57 by maperrea          #+#    #+#             */
-/*   Updated: 2021/09/16 18:09:15 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/21 18:21:18 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	set_path(t_command *command, int proc, char **path)
 	char	*tmp;
 
 	i = 0;
-	if (!access(command->proc[proc].path, F_OK))
+	if (!access(command->proc[proc].path, X_OK))
 		return ;
+	else
+		error_exit(strerror(errno));
 	while (path[i])
 	{
 		tmp = ft_strdup(path[i]);

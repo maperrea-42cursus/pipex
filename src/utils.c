@@ -6,7 +6,7 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 15:27:27 by maperrea          #+#    #+#             */
-/*   Updated: 2021/09/16 17:56:12 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/21 18:09:33 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	array_free(char **array)
 
 void	error_exit(char *error)
 {
-	ft_putstr_fd(error, 1);
+	ft_putstr_fd(error, 2);
 	free_list();
 	exit(1);
 }

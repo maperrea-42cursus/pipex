@@ -6,7 +6,7 @@
 /*   By: maperrea <maperrea@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 14:20:57 by maperrea          #+#    #+#             */
-/*   Updated: 2021/09/21 18:21:18 by maperrea         ###   ########.fr       */
+/*   Updated: 2021/09/27 15:15:23 by maperrea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	set_path(t_command *command, int proc, char **path)
 	i = 0;
 	if (!access(command->proc[proc].path, X_OK))
 		return ;
-	else
-		error_exit(strerror(errno));
+	if (!access(command->proc[proc].path, F_OK))
+		error_exit("Error: no execution permissions\n");
 	while (path[i])
 	{
 		tmp = ft_strdup(path[i]);
@@ -33,7 +33,7 @@ void	set_path(t_command *command, int proc, char **path)
 		i++;
 	}
 	if (!path[i])
-		error_exit("Error: cmd not found\n");
+		error_exit("Error: command not found\n");
 	if (!access(tmp, X_OK))
 		command->proc[proc].path = tmp;
 	else
